@@ -1,7 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
-                             https://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>net.laurus</groupId>
@@ -9,20 +8,35 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>JCSG Generation Wrapper</name>
 
+  <!-- ========================== -->
+  <!-- Global Configuration -->
+  <!-- ========================== -->
   <properties>
-    <maven.compiler.source>17</maven.compiler.source>
-    <maven.compiler.target>17</maven.compiler.target>
+    <!-- Java setup -->
+    <java.version>21</java.version>
+    <maven.compiler.release>${java.version}</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <javafx.version>21.0.4</javafx.version>
-    <lombok.version>1.18.28</lombok.version>
+
+    <!-- Dependency versions -->
+    <jcsg.version>0.5.7</jcsg.version>
+    <javafx.version>23.0.1</javafx.version>
+    <lombok.version>1.18.34</lombok.version>
+
+    <!-- Plugin versions -->
+    <compiler.plugin.version>3.13.0</compiler.plugin.version>
+    <javafx.plugin.version>0.0.8</javafx.plugin.version>
+    <shade.plugin.version>3.5.3</shade.plugin.version>
   </properties>
 
+  <!-- ========================== -->
+  <!-- Dependencies -->
+  <!-- ========================== -->
   <dependencies>
     <!-- JCSG geometry engine -->
     <dependency>
       <groupId>eu.mihosoft.vrl.jcsg</groupId>
       <artifactId>jcsg</artifactId>
-      <version>0.5.7</version>
+      <version>${jcsg.version}</version>
     </dependency>
 
     <!-- JavaFX modules -->
@@ -51,43 +65,72 @@
       <classifier>win</classifier>
     </dependency>
 
-    <!-- Lombok -->
+    <!-- Lombok (annotation processor) -->
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.28</version>
+      <version>${lombok.version}</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
 
+  <!-- ========================== -->
+  <!-- Build Configuration -->
+  <!-- ========================== -->
   <build>
     <plugins>
-      <!-- Compile for Java 17 -->
+
+      <!-- Compiler plugin -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
+        <version>${compiler.plugin.version}</version>
         <configuration>
-          <release>17</release>
+          <release>${maven.compiler.release}</release>
           <annotationProcessorPaths>
             <path>
               <groupId>org.projectlombok</groupId>
               <artifactId>lombok</artifactId>
-              <version>1.18.28</version>
+              <version>${lombok.version}</version>
             </path>
           </annotationProcessorPaths>
         </configuration>
       </plugin>
 
-      <!-- Optional: JavaFX run support -->
+      <!-- JavaFX Maven Plugin (for run/debug) -->
       <plugin>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
-        <version>0.0.8</version>
+        <version>${javafx.plugin.version}</version>
         <configuration>
           <mainClass>net.laurus.Main</mainClass>
         </configuration>
       </plugin>
+
+      <!-- Shade plugin (optional, for building single runnable JAR) -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>${shade.plugin.version}</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <createDependencyReducedPom>false</createDependencyReducedPom>
+              <transformers>
+                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                  <mainClass>net.laurus.Main</mainClass>
+                </transformer>
+              </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+
     </plugins>
   </build>
+
 </project>
