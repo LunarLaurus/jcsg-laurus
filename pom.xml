@@ -19,8 +19,8 @@
 
     <!-- Dependency versions -->
     <jcsg.version>0.5.7</jcsg.version>
-    <javafx.version>23.0.1</javafx.version>
-    <lombok.version>1.18.34</lombok.version>
+    <javafx.version>23.0.2</javafx.version>
+    <lombok.version>1.18.42</lombok.version>
 
     <!-- Plugin versions -->
     <compiler.plugin.version>3.13.0</compiler.plugin.version>
