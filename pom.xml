@@ -23,9 +23,9 @@
     <lombok.version>1.18.42</lombok.version>
 
     <!-- Plugin versions -->
-    <compiler.plugin.version>3.13.0</compiler.plugin.version>
+    <compiler.plugin.version>3.14.1</compiler.plugin.version>
     <javafx.plugin.version>0.0.8</javafx.plugin.version>
-    <shade.plugin.version>3.5.3</shade.plugin.version>
+    <shade.plugin.version>3.6.1</shade.plugin.version>
   </properties>
 
   <!-- ========================== -->
