@@ -25,7 +25,7 @@
     <!-- Plugin versions -->
     <compiler.plugin.version>3.15.0</compiler.plugin.version>
     <javafx.plugin.version>0.0.8</javafx.plugin.version>
-    <shade.plugin.version>3.6.1</shade.plugin.version>
+    <shade.plugin.version>3.6.2</shade.plugin.version>
   </properties>
 
   <!-- ========================== -->
